@@ -3,9 +3,36 @@
 <head>
 	<meta charset="utf-8">
 	<title>UI5 Walkthrough</title>
-	<script src="resources/sap-ui-core.js"></script>
+	<script
+		id="sap-ui-bootstrap"
+		src="resources/sap-ui-core.js"
+		data-sap-ui-theme="sap_horizon"
+		data-sap-ui-libs="sap.m"
+		data-sap-ui-compat-version="edge"
+		data-sap-ui-async="true"
+		data-sap-ui-on-init="module:ui5/walkthrough/index"
+		data-sap-ui-resource-roots='{
+			"ui5.walkthrough": "./"
+		}'>
+
+	</script>
 </head>
 <body>
-	<div>Hello World</div>
+<div>Hello World</div>
 </body>
 </html>
+
+<!--
+Questo file HTML è il punto di ingresso di un'applicazione SAP UI5.
+
+Carica il framework SAP UI5 tramite il file sap-ui-core.js e lo configura
+attraverso gli attributi data-sap-ui-*:
+- imposta il tema grafico (sap_horizon)
+- carica la libreria sap.m per componenti UI responsive
+- abilita il caricamento asincrono
+- definisce il namespace dell’app (ui5.walkthrough)
+- avvia il modulo JavaScript principale (ui5/walkthrough/index)
+
+Il contenuto HTML nel body è minimale perché l’interfaccia viene
+gestita e renderizzata dinamicamente da SAP UI5.
+-->
