@@ -1,11 +1,11 @@
 sap.ui.define([
-	"sap/m/Text"
-], (Text) => {
+	"sap/ui/core/mvc/XMLView"
+], (XMLView) => {
 	"use strict";
 
-	new Text({
-		text: "Hello World"
-	}).placeAt("content");
+	XMLView.create({
+		viewName: "ui5.walkthrough.view.App"
+	}).then((oView) => oView.placeAt("content"));
 });
 
 /*
@@ -15,4 +15,5 @@ Modulo UI5:
 - crea una nuova istanza del controllo Text
 - assegna la stringa "Hello World" alla proprietà text
 - inietta il controllo nell'elemento del DOM con ID "content"
+- delega la parte visiva al file XML
 */
