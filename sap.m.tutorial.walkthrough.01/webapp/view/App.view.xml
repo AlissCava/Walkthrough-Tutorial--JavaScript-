@@ -9,15 +9,14 @@
       description = "Hello {/recipient/name}"
       valueLiveUpdate = "true" 
       width = "60%"/>
-  
 </mvc:View>
 
 
-<!--Definizione XML View (App.view.xml):
-Definizione Vista XML con Controller (App.view.xml):
-- collega formalmente la vista al controller "ui5.walkthrough.controller.App"
-- inserisce un controllo <Button> (Pulsante) all'interno della vista
-- imposta l'etichetta del pulsante tramite la proprietà "text"
-- associa l'evento "press" alla funzione handler ".onShowHello"
-- utilizza il prefisso "." per indicare che la funzione è definita nel controller della vista
+<!--Implementazione Data Binding (App.view.xml):
+- aggiunge il controllo <Input> per permettere l'inserimento di dati da parte dell'utente
+- introduce la sintassi delle parentesi graffe {…} per il "Data Binding" dichiarativo
+- collega (bind) la proprietà "value" al percorso "/recipient/name" nel modello JSON
+- utilizza il binding anche nella proprietà "description" per mostrare un'anteprima dinamica
+- imposta "valueLiveUpdate=true" per sincronizzare i dati nel modello ad ogni singolo tasto premuto
+- definisce la larghezza del campo di input tramite la proprietà "width"
 -->
