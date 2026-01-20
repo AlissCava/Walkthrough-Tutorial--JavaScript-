@@ -2,7 +2,7 @@
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc">
     <Button 
-      text="Say Hello"
+      text="{i18n>showHelloButtonText}"
       press=".onShowHello"/>
     <Input 
       value = "{/recipient/name}"
@@ -12,11 +12,10 @@
 </mvc:View>
 
 
-<!--Implementazione Data Binding (App.view.xml):
-- aggiunge il controllo <Input> per permettere l'inserimento di dati da parte dell'utente
-- introduce la sintassi delle parentesi graffe {…} per il "Data Binding" dichiarativo
-- collega (bind) la proprietà "value" al percorso "/recipient/name" nel modello JSON
-- utilizza il binding anche nella proprietà "description" per mostrare un'anteprima dinamica
-- imposta "valueLiveUpdate=true" per sincronizzare i dati nel modello ad ogni singolo tasto premuto
-- definisce la larghezza del campo di input tramite la proprietà "width"
+<!--Binding dei Testi Localizzati (App.view.xml):
+- collega la proprietà "text" del pulsante al modello i18n utilizzando la sintassi "{i18n>...}".
+- referenzia la chiave "showHelloButtonText" definita nel file i18n.properties.
+- omette il carattere iniziale "/" nel percorso di binding poichè il Resource Bundle ha una struttura piatta e non gerarchica.
+- mantiene il collegamento bidirezionale tra l'Input e il modello JSON per il nome del destinatario.
+- permette l'aggiornamento dinamico della descrizione dell'input durante la digitazione grazie a "valueLiveUpdate".
 -->

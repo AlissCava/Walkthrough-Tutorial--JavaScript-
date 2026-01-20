@@ -1,31 +1,49 @@
-sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageToast"], (Controller) => {
-  "use strict";
+sap.ui.define([
+   "sap/ui/core/mvc/Controller",
+   "sap/m/MessageToast",
+   "sap/ui/model/json/JSONModel",
+   "sap/ui/model/resource/ResourceModel"
+], (Controller, MessageToast, JSONModel, ResourceModel) => {
+   "use strict";
 
-  return Controller.extend("ui5.walkthrough.controller.App", {
-    onInit() {
-      //set a data model on view
-      const oData = {
-        recipient : {
-            name : "World"
-        }
-      }; 
-      const oMOdel = new JSONMOdel(oData);
-      this.getView(). setModel(oModel);
-    },
+   return Controller.extend("ui5.walkthrough.controller.App", {
+     onInit() {
+         // set data model on view
+         const oData = {
+            recipient : {
+               name : "World"
+            }
+         };
+         const oModel = new JSONModel(oData);
+         this.getView().setModel(oModel);
 
-    onShowHello() {
-      // show a native JavaScript alert
-      MessaggeToast.show("Hello World");
-    },
-  });
+         // set i18n model on view
+         const i18nModel = new ResourceModel({
+            bundleName: "ui5.walkthrough.i18n.i18n"
+         });
+         this.getView().setModel(i18nModel, "i18n");
+      },
+
+      onShowHello() {
+         // read msg from i18n model
+         const oBundle = this.getView().getModel("i18n").getResourceBundle();
+         const sRecipient = this.getView().getModel().getProperty("/recipient/name");
+         const sMsg = oBundle.getText("helloMsg", [sRecipient]);
+
+         // show message
+         MessageToast.show(sMsg);
+      }
+   });
 });
 
 /*
-Integrazione Modello Dati JSON (App.controller.js):
-- importa il modulo "sap/ui/model/json/JSONModel" per la gestione dei dati locali
-- implementa il metodo "onInit", un hook del ciclo di vita (lifecycle) richiamato dal framework alla creazione del controller (simile a un costruttore)
-- definisce un oggetto dati locale ("oData") con una struttura nidificata per il destinatario ("recipient")
-- istanzia il modello JSON caricando i dati definiti
-- associa il modello alla vista tramite "this.getView().setModel(oModel)", rendendo i dati accessibili ai controlli della View XML
-- mantiene temporaneamente un messaggio statico nel "MessageToast" in attesa della logica di traduzione (i18n)
+Gestione Avanzata Modelli e Localizzazione (App.controller.js):
+- importa ResourceModel per gestire il bundle dei testi e JSONModel per i dati applicativi.
+- nel metodo "onInit", istanzia il ResourceModel puntando a "ui5.walkthrough.i18n.i18n" (namespace + cartella + nome file).
+- configura il modello i18n come "modello nominato" (chiave "i18n") per permetterne l'uso parallelo con il modello JSON predefinito.
+- in "onShowHello", accede al Resource Bundle tramite il metodo "getResourceBundle" per estrarre i testi tradotti.
+- recupera dinamicamente il valore dell'input dal modello JSON usando "getProperty("/recipient/name")".
+- utilizza il metodo "getText" passando un array di stringhe per sostituire i segnaposto (es. {0}) con dati variabili.
+- sfrutta il meccanismo di fallback di SAPUI5 che, a runtime, tenta di caricare il file i18n specifico per la lingua del browser prima di usare quello di default.
+- visualizza il messaggio finale composto e localizzato attraverso il MessageToast.
 */
