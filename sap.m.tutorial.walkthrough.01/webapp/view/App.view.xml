@@ -1,0 +1,18 @@
+<mvc:View
+   controllerName="ui5.walkthrough.controller.App"
+   xmlns="sap.m"
+   xmlns:mvc="sap.ui.core.mvc">
+   <Button
+      text="Say Hello"
+      press=".onShowHello"/>
+</mvc:View>
+
+
+<!--Definizione XML View (App.view.xml):
+Definizione Vista XML con Controller (App.view.xml):
+- collega formalmente la vista al controller "ui5.walkthrough.controller.App"
+- inserisce un controllo <Button> (Pulsante) all'interno della vista
+- imposta l'etichetta del pulsante tramite la proprietà "text"
+- associa l'evento "press" alla funzione handler ".onShowHello"
+- utilizza il prefisso "." per indicare che la funzione è definita nel controller della vista
+-->
