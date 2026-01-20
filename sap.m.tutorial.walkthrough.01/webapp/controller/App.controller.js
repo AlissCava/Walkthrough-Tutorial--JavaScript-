@@ -1,22 +1,31 @@
-sap.ui.define([
-   "sap/ui/core/mvc/Controller",
-   "sap/m/MessageToast"
-], (Controller) => {
-   "use strict";
+sap.ui.define(["sap/ui/core/mvc/Controller", "sap/m/MessageToast"], (Controller) => {
+  "use strict";
 
-   return Controller.extend("ui5.walkthrough.controller.App", {
-      onShowHello() {
-         // show a native JavaScript alert
-         MessaggeToast.show("Hello World");
-      }
-   });
+  return Controller.extend("ui5.walkthrough.controller.App", {
+    onInit() {
+      //set a data model on view
+      const oData = {
+        recipient : {
+            name : "World"
+        }
+      }; 
+      const oMOdel = new JSONMOdel(oData);
+      this.getView(). setModel(oModel);
+    },
+
+    onShowHello() {
+      // show a native JavaScript alert
+      MessaggeToast.show("Hello World");
+    },
+  });
 });
 
 /*
-Evoluzione Controller con MessageToast (App.controller.js):
-- estende le dipendenze includendo il modulo "sap/m/MessageToast"
-- sfrutta la sintassi AMD (Asynchronous Module Definition) per separare il caricamento dei moduli dall'esecuzione, migliorando le performance
-- mappa i moduli caricati su parametri della funzione callback (es. MessageToast) per un accesso semplificato senza namespace
-- utilizza "sap.ui.define" per dichiarare un namespace globale che renda il controller rintracciabile nell'app
-- sostituisce l'alert nativo con "MessageToast.show", offrendo un feedback utente moderno e non bloccante
+Integrazione Modello Dati JSON (App.controller.js):
+- importa il modulo "sap/ui/model/json/JSONModel" per la gestione dei dati locali
+- implementa il metodo "onInit", un hook del ciclo di vita (lifecycle) richiamato dal framework alla creazione del controller (simile a un costruttore)
+- definisce un oggetto dati locale ("oData") con una struttura nidificata per il destinatario ("recipient")
+- istanzia il modello JSON caricando i dati definiti
+- associa il modello alla vista tramite "this.getView().setModel(oModel)", rendendo i dati accessibili ai controlli della View XML
+- mantiene temporaneamente un messaggio statico nel "MessageToast" in attesa della logica di traduzione (i18n)
 */
