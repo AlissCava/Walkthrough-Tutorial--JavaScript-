@@ -1,6 +1,7 @@
 https://sapui5.hana.ondemand.com/#/topic/3da5f4be63264db99f2e5b04c5e853db
 
 Il "Libretto di Istruzioni" dell'App: manifest.json
+
 Il file manifest.json (chiamato anche Descrittore) è come la carta d'identità o il libretto di istruzioni della tua applicazione. Invece di scrivere mille righe di codice per dire all'app come comportarsi, scriviamo tutto qui dentro in modo ordinato.
 
 A cosa servono le varie parti?
