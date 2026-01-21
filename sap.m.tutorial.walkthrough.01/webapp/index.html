@@ -1,30 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>UI5 Walkthrough</title>
-    <script
-      id="sap-ui-bootstrap"
-      src="resources/sap-ui-core.js"
-      data-sap-ui-theme="sap_horizon"
-      data-sap-ui-libs="sap.m"
-      data-sap-ui-compat-version="edge"
-      data-sap-ui-async="true"
-      data-sap-ui-on-init="module:ui5/walkthrough/index"
-      data-sap-ui-resource-roots='{
+<head>
+	<meta charset="utf-8">
+	<title>UI5 Walkthrough</title>
+	<script
+		id = "sap-ui-bootstrap"
+		src = "resources/sap-ui-core.js"
+		data-sap-ui-theme = "sap_horizon"
+		data-sap-ui-compat-version = "edge"
+		data-sap-ui-async = "true"
+		data-sap-ui-on-init = "module:sap/ui/core/ComponentSupport"
+		data-sap-ui-resource-roots = '{
 			"ui5.walkthrough": "./"
-		}'></script>
-  </head>
-  <body class="sapUiBody" id="content"></body>
-</html>   
+		}'>
+	</script>
+</head>
+<body class = "sapUiBody" id = "content">
+  <div data-sap-ui-component data-name = "ui5.walkthrough" data-id = "container" data-settings = '{"id" : "walkthrough"}'></div>
+</body>
+</html>  
 
 
 <!--
-Configurazione Bootstrap UI5:
-- definisce la struttura HTML5 di base e il set di caratteri UTF-8
-- carica il bootstrap di SAPUI5 in modalità asincrona
-- imposta il tema grafico "sap_horizon" e la libreria "sap.m"
-- configura il mappaggio del namespace ("ui5.walkthrough") verso la root locale
-- definisce il modulo "index" come punto di ingresso all'inizializzazione (on-init)
-- predispone il body con la classe CSS standard e l'ID "content" per il rendering
+Inizializzazione Dichiarativa (index.html):
+- abilita il modulo "sap/ui/core/ComponentSupport" nel bootstrap per gestire l'avvio automatico.
+- rimuove la dipendenza dal file "index.js", che può ora essere eliminato.
+- utilizza un tag <div> nel body per dichiarare dove deve apparire l'applicazione.
+- usa gli attributi "data-sap-ui-component" e "data-name" per indicare quale componente caricare.
+- istanzia automaticamente il componente e la sua vista non appena il framework è pronto (on-init).
 -->
