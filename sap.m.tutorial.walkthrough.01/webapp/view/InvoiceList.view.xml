@@ -1,14 +1,40 @@
 <mvc:View
-   xmlns="sap.m"
-   xmlns:mvc="sap.ui.core.mvc">
-   <List
-      headerText="{i18n>invoiceListTitle}"
-      class="sapUiResponsiveMargin"
-      width="auto"
-      items="{invoice>/Invoices}" >
-      <items>
-         <ObjectListItem
-            title="{invoice>Quantity} x {invoice>ProductName}"/>
-      </items>
-   </List>
+    controllerName="ui5.walkthrough.controller.InvoiceList"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    <List
+        headerText="{i18n>invoiceListTitle}"
+        class="sapUiResponsiveMargin"
+        width="auto"
+        items="{invoice>/Invoices}">
+        <items>
+            <ObjectListItem
+                core:require="{
+                    Currency: 'sap/ui/model/type/Currency'
+                }"
+                title="{invoice>Quantity} x {invoice>ProductName}"
+                number="{
+                    parts: [
+                        'invoice>ExtendedPrice',
+                        'view>/currency'
+                    ],
+                    type: 'Currency',
+                    formatOptions: {
+                        showMeasure: false
+                    }
+                }"
+                numberUnit="{view>/currency}"/>
+        </items>
+    </List>
 </mvc:View>
+
+<!--
+Visualizzazione Lista Fatture (InvoiceList.view.xml):
+- utilizza il controllo <List> per iterare sui dati del modello "invoice" tramite l'aggregazione "items".
+- implementa <ObjectListItem> per mostrare dettagli strutturati (titolo, numero, unità).
+- introduce "core:require" per importare il modulo "sap/ui/model/type/Currency" direttamente nella View.
+- utilizza i "Calculated Fields" (proprietà "parts") per combinare dati da modelli diversi (prezzo e valuta) in un unico campo.
+- applica il tipo "Currency" per formattare automaticamente i decimali in base alla valuta specificata.
+- configura "formatOptions" con "showMeasure: false" per separare il valore numerico dalla sigla della valuta (visualizzata in "numberUnit").
+-->
