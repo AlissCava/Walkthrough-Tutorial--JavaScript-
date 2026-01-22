@@ -1,0 +1,38 @@
+<mvc:View
+   controllerName="ui5.walkthrough.controller.HelloPanel"
+   xmlns="sap.m"
+   xmlns:mvc="sap.ui.core.mvc">
+   <Panel
+      headerText="{i18n>helloPanelTitle}"
+      class="sapUiResponsiveMargin"
+      width="auto">
+      <content>
+        <Button
+          id="helloDialogButton"
+          text="{i18n>openDialogButtonText}"
+          press=".onOpenDialog"
+          class="sapUiSmallMarginEnd"/>
+        <Button
+          text="{i18n>showHelloButtonText}"
+          press=".onShowHello"
+          class="myCustomButton"/>
+        <Input
+          value="{/recipient/name}"
+          valueLiveUpdate="true"
+          width="60%"/>
+        <FormattedText
+          htmlText="Hello {/recipient/name}"
+          class="sapUiSmallMargin sapThemeHighlight-asColor myCustomText"/>
+      </content>
+   </Panel>
+</mvc:View>     
+
+<!--
+Definizione Sottovista Indipendente (HelloPanel.view.xml):
+- isola la logica del pannello "Hello" in una vista dedicata con il proprio controller.
+- introduce un pulsante con ID univoco ("helloDialogButton") per l'apertura di un dialogo futuro.
+- sottolinea l'importanza degli ID statici per facilitare i test automatici (OPA) ed evitare ID generati casualmente dal framework.
+- utilizza il controllo <FormattedText> per visualizzare messaggi con formattazione HTML e temi dinamici.
+- applica classi di stile standard ("sapUiResponsiveMargin") e personalizzate per gestire spazi e colori.
+- mantiene il binding dei dati per l'input e il testo, garantendo la sincronizzazione in tempo reale.
+-->

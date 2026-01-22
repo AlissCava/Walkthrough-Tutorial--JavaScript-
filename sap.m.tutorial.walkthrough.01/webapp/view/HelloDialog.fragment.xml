@@ -1,0 +1,16 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core">
+   <Dialog
+      id="helloDialog"
+      title="Hello {/recipient/name}"/>
+</core:FragmentDefinition>
+
+<!--
+Definizione del Frammento (HelloDialog.fragment.xml):
+- utilizza <core:FragmentDefinition> per definire una parte di UI dichiarativa e riutilizzabile.
+- dichiara il controllo <Dialog> nel namespace "sap.m" per creare finestre popup.
+- non possiede un controller proprio; la logica viene gestita dal controller della vista chiamante.
+- agisce come contenitore "leggero" che non lascia tracce (footprint) dirette nell'albero DOM.
+- permette di raggruppare controlli senza creare un'istanza di controllo dedicata per il frammento stesso.
+-->
