@@ -3,9 +3,14 @@
    xmlns:core="sap.ui.core">
    <Dialog
       id="helloDialog"
-      title="Hello {/recipient/name}"/>
+      title ="Hello {/recipient/name}">
+      <beginButton>
+         <Button
+            text="{i18n>dialogCloseButtonText}"
+            press=".onCloseDialog"/>
+      </beginButton>
+   </Dialog>
 </core:FragmentDefinition>
-
 <!--
 Definizione del Frammento (HelloDialog.fragment.xml):
 - utilizza <core:FragmentDefinition> per definire una parte di UI dichiarativa e riutilizzabile.
@@ -13,4 +18,13 @@ Definizione del Frammento (HelloDialog.fragment.xml):
 - non possiede un controller proprio; la logica viene gestita dal controller della vista chiamante.
 - agisce come contenitore "leggero" che non lascia tracce (footprint) dirette nell'albero DOM.
 - permette di raggruppare controlli senza creare un'istanza di controllo dedicata per il frammento stesso.
+
+Aggiornamento del Frammento Dialogo (HelloDialog.fragment.xml):
+- aggiunge un pulsante all'aggregazione "beginButton" per gestire la chiusura del popup.
+- associa l'evento "press" alla funzione ".onCloseDialog" del controller che ha caricato il frammento.
+- introduce il concetto di "begin" e "end" (al posto di sinistra/destra) per garantire la compatibilità con lingue RTL (da destra a sinistra).
+- assicura che il posizionamento dei pulsanti nel footer del dialogo segua automaticamente la direzione del testo della lingua dell'utente.
+- sfrutta il collegamento stabilito via "loadFragment" per invocare correttamente i metodi del controller chiamante.
+*/
+
 -->
