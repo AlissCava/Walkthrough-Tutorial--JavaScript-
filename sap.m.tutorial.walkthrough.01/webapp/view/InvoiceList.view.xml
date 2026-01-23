@@ -25,17 +25,27 @@
                     }
                 }"
                 numberUnit="{view>/currency}"
-                numberState="{= ${invoice>ExtendedPrice} > 50 ? 'Error' : 'Success' }"/>
+                numberState="{= ${invoice>ExtendedPrice} > 50 ? 'Error' : 'Success' }">
+                <firstStatus>
+                    <ObjectStatus
+                        core:require="{
+                            Formatter: 'ui5/walkthrough/model/formatter'
+                        }"
+                        text="{
+                            path: 'invoice>Status',
+                            formatter: 'Formatter.statusText.bind($controller)'
+                        }"/>
+                </firstStatus>
+            </ObjectListItem>
         </items>
     </List>
 </mvc:View>
 
 <!--
-Visualizzazione Lista Fatture (InvoiceList.view.xml):
-- utilizza il controllo <List> per iterare sui dati del modello "invoice" tramite l'aggregazione "items".
-- implementa <ObjectListItem> per mostrare dettagli strutturati (titolo, numero, unità).
-- introduce "core:require" per importare il modulo "sap/ui/model/type/Currency" direttamente nella View.
-- utilizza i "Calculated Fields" (proprietà "parts") per combinare dati da modelli diversi (prezzo e valuta) in un unico campo.
-- applica il tipo "Currency" per formattare automaticamente i decimali in base alla valuta specificata.
-- configura "formatOptions" con "showMeasure: false" per separare il valore numerico dalla sigla della valuta (visualizzata in "numberUnit").
+Visualizzazione Avanzata con Formattatori (InvoiceList.view.xml):
+- importa il modulo formatter personalizzato tramite "core:require" assegnandogli l'alias "Formatter".
+- introduce la proprietà "numberState" nell'ObjectListItem usando l'Expression Binding per cambiare colore al prezzo (Rosso/Errore se > 50, Verde/Successo altrimenti).
+- aggiunge l'aggregazione "firstStatus" con un controllo "ObjectStatus" per mostrare lo stato della fattura.
+- collega la funzione "Formatter.statusText" alla proprietà "text" dello stato, utilizzando ".bind($controller)" per garantire che il formattatore possa accedere correttamente al controller e ai suoi modelli.
+- permette una traduzione dinamica dei codici di stato tecnici in testi leggibili dall'utente tramite il bundle i18n.
 -->
