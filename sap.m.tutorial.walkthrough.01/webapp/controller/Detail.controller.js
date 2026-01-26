@@ -1,17 +1,21 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/ui/core/routing/History"
-], (Controller, History) => {
+	"sap/ui/core/routing/History",
+	"sap/m/MessageToast"
+], (Controller, History, MessageToast) => {
 	"use strict";
 
 	return Controller.extend("ui5.walkthrough.controller.Detail", {
-
+		
 		onInit() {
 			const oRouter = this.getOwnerComponent().getRouter();
 			oRouter.getRoute("detail").attachPatternMatched(this.onObjectMatched, this);
 		},
 
 		onObjectMatched(oEvent) {
+			// Reset del custom control per permettere una nuova votazione
+			this.byId("rating").reset();
+
 			this.getView().bindElement({
 				path: "/" + window.decodeURIComponent(oEvent.getParameter("arguments").invoicePath),
 				model: "invoice"
@@ -28,16 +32,24 @@ sap.ui.define([
 				const oRouter = this.getOwnerComponent().getRouter();
 				oRouter.navTo("overview", {}, true);
 			}
+		},
+
+		onRatingChange(oEvent) {
+			// Recupera il valore dal parametro dell'evento personalizzato
+			const fValue = oEvent.getParameter("value");
+			const oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+
+			// Mostra un messaggio di conferma con il voto ricevuto
+			MessageToast.show(oResourceBundle.getText("ratingConfirmation", [fValue]));
 		}
 	});
 });
 
 /*
-Controller della Vista di Dettaglio (Detail.controller.js):
-- onInit: registra l'evento "patternMatched". Ogni volta che l'URL corrisponde alla rotta "detail", viene eseguita la funzione onObjectMatched.
-- onObjectMatched: recupera il parametro "invoicePath" dall'URL, lo decodifica e usa "bindElement" per collegare la vista esattamente a quel set di dati nel modello.
-- Element Binding: questa operazione permette ai controlli nella vista Detail di mostrare i dati della fattura corretta senza logiche complicate.
-- onNavBack: gestisce il ritorno alla pagina precedente. Utilizza la classe "History" di SAPUI5 per capire se l'utente proviene da un'altra pagina dell'app.
-- Gestione Cronologia: se esiste una pagina precedente nell'app, usa il comando nativo del browser; altrimenti, forza il ritorno alla "overview".
-- Parametro "true" in navTo: indica al router di sostituire la cronologia corrente, evitando che il tasto "indietro" del browser crei loop infiniti sulla pagina di dettaglio.
+Integrazione del Custom Control nel Controller (Detail.controller.js):
+- MessageToast: caricata come dipendenza per fornire un feedback visivo immediato all'utente dopo la votazione.
+- onObjectMatched: include ora la chiamata a .reset() sul controllo "rating". Questo è fondamentale perché, navigando tra diverse fatture, il controllo deve tornare allo stato iniziale (non votato).
+- onRatingChange: gestisce l'evento personalizzato "change" definito nel metadata del ProductRating. 
+- oEvent.getParameter("value"): dimostra come i dati passati dal custom control tramite fireEvent siano facilmente accessibili nel controller della vista.
+- User Experience: l'uso del MessageToast permette di simulare il salvataggio dei dati senza la complessità di una chiamata API reale, mantenendo l'esempio focalizzato sull'interazione tra componenti.
 */
