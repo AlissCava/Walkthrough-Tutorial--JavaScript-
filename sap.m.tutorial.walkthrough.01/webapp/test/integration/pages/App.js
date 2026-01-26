@@ -34,12 +34,3 @@ sap.ui.define([
 		}
 	});
 });
-
-/*
-Definizione del Page Object (App.js):
-- createPageObjects: definisce l'oggetto "onTheAppPage" utilizzato per organizzare azioni e verifiche in modo modulare.
-- Actions (iPressTheSayHelloWithDialogButton): utilizza "waitFor" per cercare un pulsante specifico tramite ID e Vista, eseguendo un'azione di pressione (Press) una volta trovato.
-- Assertions (iShouldSeeTheHelloDialog): verifica la presenza nel DOM di un controllo di tipo "sap.m.Dialog".
-- Robustezza: la funzione "waitFor" gestisce automaticamente l'attesa (polling) finché l'elemento non appare o non scade il timeout.
-- Manutenibilità: centralizzando qui i selettori (ID e nomi vista), se l'interfaccia cambia, basterà aggiornare solo questo file invece di tutti i test.
-*/

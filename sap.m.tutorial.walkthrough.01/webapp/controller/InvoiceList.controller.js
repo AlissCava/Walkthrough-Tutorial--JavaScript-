@@ -6,7 +6,7 @@ sap.ui.define([
 ], (Controller, JSONModel, Filter, FilterOperator) => {
 	"use strict";
 
-	return Controller.extend("ui5.walkthrough.controller.InvoiceList", { 
+	return Controller.extend("ui5.walkthrough.controller.InvoiceList", {
 		onInit() {
 			const oViewModel = new JSONModel({
 				currency: "EUR"
@@ -26,17 +26,20 @@ sap.ui.define([
 			const oList = this.byId("invoiceList");
 			const oBinding = oList.getBinding("items");
 			oBinding.filter(aFilter);
+		},
+
+		onPress() {
+			const oRouter = this.getOwnerComponent().getRouter();
+			oRouter.navTo("detail");
 		}
 	});
 });
 
 /*
-Logica di Filtraggio della Lista (InvoiceList.controller.js):
-- importa "sap/ui/model/Filter" e "sap/ui/model/FilterOperator" per gestire la ricerca.
-- implementa la funzione "onFilterInvoices" attivata dall'evento di ricerca.
-- recupera la stringa digitata dall'utente tramite "oEvent.getParameter('query')".
-- crea un oggetto Filtro che cerca la corrispondenza (non sensibile alle maiuscole) nel campo "ProductName".
-- utilizza "this.byId('invoiceList')" per individuare correttamente la lista nella vista tramite il suo ID.
-- accede al binding dell'aggregazione "items" e applica il filtro per aggiornare dinamicamente i dati visualizzati.
-- garantisce che, se la ricerca è vuota, la lista venga resettata mostrando tutti gli elementi.
+Gestione della navigazione nel Controller (InvoiceList.controller.js):
+- onPress: definisce la funzione che viene richiamata quando l'utente clicca su un elemento della lista delle fatture.
+- getRouter: recupera l'istanza del router globale attraverso il componente principale dell'app (Owner Component).
+- navTo: esegue la navigazione verso la rotta denominata "detail", come configurato nel file manifest.json.
+- Integrazione: questo metodo trasforma una semplice interazione della lista in un cambio di stato dell'applicazione, aggiornando l'URL.
+- Best Practice: l'uso di nomi di rotte logiche ("detail") invece di percorsi file fisici rende il sistema di navigazione flessibile e facile da mantenere.
 */

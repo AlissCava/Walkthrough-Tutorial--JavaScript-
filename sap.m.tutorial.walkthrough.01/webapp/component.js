@@ -1,43 +1,42 @@
 sap.ui.define([
-   "sap/ui/core/UIComponent",
-   "sap/ui/model/json/JSONModel",
-   "sap/ui/model/resource/ResourceModel"
-], (UIComponent, JSONModel, ResourceModel) => {
-   "use strict";
+	"sap/ui/core/UIComponent",
+	"sap/ui/model/json/JSONModel"
+], (UIComponent, JSONModel) => {
+	"use strict";
 
-   return UIComponent.extend("ui5.walkthrough.Component", {
-      metadata : {
-         interfaces : ["sap.ui.core.IAsyncContentCreation"],
-         manifest : "json"
-      },
+	return UIComponent.extend("ui5.walkthrough.Component", {
 
-      init() {
-         // call the init function of the parent
-         UIComponent.prototype.init.apply(this, arguments);
-         // set data model
-         const oData = {
-            recipient : {
-               name : "World"
-            }
-         };
-         const oModel = new JSONModel(oData);
-         this.setModel(oModel);
+		metadata: {
+			interfaces: ["sap.ui.core.IAsyncContentCreation"],
+			manifest: "json"
+		},
 
-         // set i18n model
-         const i18nModel = new ResourceModel({
-            bundleName: "ui5.walkthrough.i18n.i18n"
-         });
-         this.setModel(i18nModel, "i18n");
-      }
-   });
+		init() {
+			// call the init function of the parent
+			UIComponent.prototype.init.apply(this, arguments);
+
+			// set data model
+			const oData = {
+				recipient: {
+					name: "World"
+				}
+			};
+			const oModel = new JSONModel(oData);
+			this.setModel(oModel);
+
+			// create the views based on the url/hash
+			this.getRouter().initialize();
+		}
+	});
 });
 
 /*
-Evoluzione del Componente (Component.js):
-- divide la struttura in due sezioni: "metadata" per la configurazione e "init" per la logica di avvio.
-- definisce la "rootView" nei metadati, delegando al componente la gestione automatica della vista principale.
-- implementa l'interfaccia "sap.ui.core.IAsyncContentCreation" per abilitare il caricamento asincrono di vista e navigazione.
-- centralizza l'istanziazione dei modelli (JSON e i18n), spostandoli dal controller al componente per una gestione globale.
-- associa i modelli direttamente al componente ("this.setModel"), garantendo che la vista e i controlli annidati li ereditino automaticamente.
-- richiama obbligatoriamente il metodo init della classe base tramite "UIComponent.prototype.init.apply".
+Configurazione del Componente Radice (Component.js):
+- UIComponent.extend: definisce il cuore dell'applicazione, caricando le impostazioni dal file manifest.json.
+- IAsyncContentCreation: interfaccia che garantisce la creazione asincrona dei contenuti per migliorare le prestazioni.
+- Metodo init: inizializza il componente richiamando il costruttore della classe base (UIComponent).
+- JSONModel: crea e imposta il modello dati globale "recipient" accessibile da tutte le viste dell'app.
+- Router Initialization: attiva il meccanismo di navigazione tramite getRouter().initialize().
+- Gestione URL: il router analizza l'hash dell'URL (es. #/test) e carica automaticamente la vista corretta in base alle regole definite nel manifest.
+- Automazione: non serve istanziare il router manualmente; SAPUI5 lo genera basandosi sulla configurazione dell'App Descriptor.
 */

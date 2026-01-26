@@ -27,12 +27,3 @@ sap.ui.define(() => {
 		}
 	};
 });
-
-/*
-Aggiornamento della Test Suite Globale (testsuite.qunit.js):
-- Estensione dei test: aggiunge il modulo "integration/opaTests" alla lista dei test eseguibili.
-- Integrazione OPA5: permette di lanciare i test di interazione utente (NavigationJourney) direttamente dalla suite principale.
-- Automazione: rimuove la necessità di estensioni manuali (.qunit.js), gestite automaticamente dal runner durante l'esecuzione.
-- Visualizzazione: definisce titoli chiari ("Unit Tests" vs "Integration Tests") per distinguere le tipologie di test nell'interfaccia browser.
-- Punto di controllo unico: centralizza tutta la qualità del codice (logica e UI) in un unico pannello di controllo per facilitare il Continuous Integration (CI).
-*/
