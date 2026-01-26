@@ -1,7 +1,6 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/model/json/JSONModel",
-	"sap/ui/test/starter/runTest",
 	"sap/ui/Device"
 ], (UIComponent, JSONModel, Device) => {
 	"use strict";
@@ -16,7 +15,7 @@ sap.ui.define([
 			// call the init function of the parent
 			UIComponent.prototype.init.apply(this, arguments);
 
-			// set data model
+			// set data model on view
 			const oData = {
 				recipient: {
 					name: "World"
@@ -32,16 +31,20 @@ sap.ui.define([
 
 			// create the views based on the url/hash
 			this.getRouter().initialize();
+		},
+
+		getContentDensityClass() {
+			return Device.support.touch ? "sapUiSizeCozy" : "sapUiSizeCompact";
 		}
 	});
 });
 
 /*
-Integrazione del Modello Dispositivo (Component.js):
-- sap.ui.Device: carica l'API di SAPUI5 che rileva automaticamente le caratteristiche del browser e del sistema (es. se è un dispositivo touch, le dimensioni dello schermo, il sistema operativo).
-- oDeviceModel: crea un JSONModel utilizzando direttamente i dati forniti dall'oggetto Device.
-- OneWay Binding: imposta la modalità di binding a "sola lettura". Poiché i dati del dispositivo non devono essere modificati dall'app, questo previene errori accidentali e ottimizza le prestazioni.
-- Named Model ("device"): registra il modello con un nome specifico. Questo permette di referenziarlo nelle viste XML usando la sintassi "{device>/...}".
-- Reattività: grazie a questo modello, l'applicazione può adattare la sua interfaccia in tempo reale (ad esempio nascondendo pulsanti su mobile o cambiando layout) senza scrivere codice CSS complesso.
-- Ereditarietà: essendo impostato a livello di Component, il modello "device" è disponibile automaticamente in tutte le viste e i controller dell'applicazione.
+Gestione della Densità dei Contenuti e Device Model (Component.js):
+- Device API: utilizzata per rilevare le capacità hardware del client, in particolare il supporto al touch screen.
+- Modello "device": espone i dati del dispositivo come modello JSON ("OneWay") per permettere il binding dichiarativo nelle viste XML.
+- getContentDensityClass: metodo helper che determina la dimensione visiva ottimale dei controlli SAPUI5.
+- sapUiSizeCozy: classe CSS restituita per dispositivi touch; aumenta le dimensioni dei controlli (es. pulsanti più grandi) per facilitare l'interazione con le dita.
+- sapUiSizeCompact: classe CSS restituita per dispositivi desktop; riduce lo spazio occupato dai controlli per mostrare più informazioni a schermo (ottimizzata per l'uso del mouse).
+- Centralizzazione: definendo questa logica nel Component, l'app garantisce un'esperienza utente coerente e adattiva su qualsiasi dispositivo.
 */

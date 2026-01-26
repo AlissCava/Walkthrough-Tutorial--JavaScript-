@@ -97,7 +97,11 @@
 				"detail": {
 					"id": "detail",
 					"name": "Detail"
-				}
+				},
+        "contentDensities": {
+          "compact": true,
+          "cozy": true
+        }
 			}
 		}
 	}
